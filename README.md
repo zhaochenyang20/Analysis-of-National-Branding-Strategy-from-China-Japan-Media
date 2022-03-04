@@ -28,8 +28,6 @@
 
 - 一些公共函数
 
-
-
 # Parsers
 
 ## 核心文件说明
@@ -56,4 +54,22 @@
 
 - refactorJsons.py 用于将之前格式并不完善的 Json 文件重构，并且添加日期
 
-  ## TODO
+- AddAllTheTxt.py 将中文新闻和日语新闻所有 Json 文件合并成一个文件（由于存在 一些非 Json 文件，Windows cmd 中的 Copy 功能会失败，使用鲁棒性更高的 try-except 语句进行处理，跳过文件小于 5 份）
+
+- calculateYumiuhu.py 统计读卖 Json 文件列表中字典个数并求和
+
+- cloudWords.py 导入已生成的词频数目和图片轮廓（冰墩墩）生成词云图
+
+- divideTheLanguageChinaAndJapan.py 检测内容是否包含平假名的 ASCII 码，从而将 18098 份文件分离为中文新闻和日语新闻（中文新闻：8646 份，日语新闻：9452 份）
+
+- drawDNAGraphs.py 导入 getSpecificWordFrequency.py 中生成的词频，并依据两者公用的全局变量绘制 DNA 图（横轴代表时间，纵轴代表不同关键词，颜色透明度代表该词在某段时间内出现的频率）
+
+- getRank.py 导入 processDataInJapan.py 中生成的内容、标题频次（以字典列表的形式存储），为后续计算饼状图和柱状图的“其他”类别，将字典排序，生成三维列表
+
+- getSpecificWordFrequency.py 在 refactor 后的文件中统计给定关键词的在不同时间段的频次，生成字典列表
+
+- graphPieAndColumn.py 处理 getRank.py 中生成的三维列表，生成带有“其他”类别的 list1,list2，分别传入绘制饼状图和柱状图函数中，批量生成对应图表
+
+- processDataInJapan.py 预处理 Scanner.xlsx 中不同 sheet 中不同列关键词在中文新闻和日语新闻中出现的次数总和，使用 Counter() 计数器。最开始处理时约有 15% 的数据丢失，调查原因发现 content 有时写成 context ，使用连续的 try-except 语句达到 0-2 错误量，同时促进了 Json 文件的重构
+
+- refactorJsons.py 将 Json 文件中所有的 key 值统一“度量衡”，同时使用正则表达式查询的方法提取出 time 或 date 中年月日，以八位整型的方式存储在 date 中，以便后续计算词频随时间分布
