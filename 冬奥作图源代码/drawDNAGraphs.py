@@ -1,4 +1,4 @@
-from pickle import TRUE         #二进制序列文本
+from pickle import TRUE
 import xlwings as xw
 import matplotlib.pyplot as plt
 import matplotlib
@@ -29,9 +29,6 @@ nameObjetsChina=["运动(中文)","夏季运动(中文)","冬季运动(中文)"]
 yearPoint = [20210705,20210710,20210715,20210720,20210725,20210730,20210801,20210805,20210810,20210815,20210820,20210825,20210830,20210901,20211001,20211101,20211201,20220101,20220105,20220110,20220115,20220120,20220125,20220130,20220201,20220205,20220210,20220215,20220220,20220225,20220301]
 
 showData = []
-for i in range(0,7):
-    showData.append(str(yearPoint[5 * i]//10000) + str(".") + str(yearPoint[5 * i] % 10000 // 100) + str('.')+  str(yearPoint[5 * i] % 100))
-
 
 
 def metric(fn):
@@ -54,7 +51,7 @@ def findSection(day,dayList):
     return random(range(0,len(dayList)))
 
 
-def draw(i,tempJson):
+def draw(i, tempJson):
     numOfObjects = len(tempJson)
     fig1 = plt.figure()
     ax1 = fig1.add_subplot(111)
@@ -69,25 +66,29 @@ def draw(i,tempJson):
                 max = tempJson[j][key]
         for key in tempJson[j]:
             validFrequency = tempJson[j][key]
-            posiX = findSection(int(key),yearPoint) / 2.5
+            posiX = findSection(int(key), yearPoint) / 2.5
             posiXAll = []
-            for k in range(0,7):
+            for k in range(0, 7):
                 posiXAll.append((findSection(yearPoint[5 *k],yearPoint)) / 2.5)
             plt.xticks(posiXAll, showData)
-            rect = plt.Rectangle((posiX, 2 + 3.0 * (numOfObjects - j)), 0.6, 0.8, color = '#00CED1',alpha = validFrequency / max)
+            rect = plt.Rectangle((posiX, 2 + 3.0 * (numOfObjects - j)), 0.6, 0.8, color='#00CED1', alpha\
+                = validFrequency / max)
             ax1.add_patch(rect)
     posiYAll = []
     for j in range(0,len(tempJson)):
         posiYAll.append(2 + 3 * (numOfObjects - j))
-    plt.yticks(posiYAll,allObjects[i],fontsize = 7)
-    plt.xlim(0,12)
-    plt.ylim(0,4 * numOfObjects)
+    plt.yticks(posiYAll, allObjects[i], fontsize=7)
+    plt.xlim(0, 12)
+    plt.ylim(0, 4 * numOfObjects)
     titleName = nameObjets[i] + "报道趋势图"
     plt.title(titleName)
     plt.savefig(r"C:\Users\liuy\Desktop\DNA图片" + "\\" + titleName + ".png")
 
 
 if __name__ == '__main__':
+    for i in range(0, 7):
+        showData.append(
+            str(yearPoint[5 * i] // 10000) + str(".") + str(yearPoint[5 * i] % 10000 // 100) + str('.') + str(yearPoint[5 * i] % 100))
     for i in tqdm(range(0,len(nameObjets))):
         addNamePosi = r"C:\Users\liuy\Desktop\workFlow\重点词词频（中文）" + "\\" + nameObjets[i] + ".json"
         with open(addNamePosi,"r",encoding="utf8",errors = "ignore") as f:

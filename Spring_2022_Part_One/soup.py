@@ -22,7 +22,7 @@ def metric(fn):
     def wrapper(*args, **kw):
         print('start executing %s' % (fn.__name__))
         start_time = time.time()
-        result = fn(*args, **kw)
+        result = fn(*args, **kw
         end_time = time.time()
         t = 1000 * (end_time - start_time)
         print('%s executed in %s ms' % (fn.__name__, t))
